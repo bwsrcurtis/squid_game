@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=3 uid="uid://4wkj23cavyvp"]
+
+[ext_resource type="Texture2D" uid="uid://bkgis52314jjg" path="res://Assets/Walk/Walk0.png" id="1_0sx41"]
+[ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_oopub"]
+[ext_resource type="Texture2D" uid="uid://diw4yecf8nwmn" path="res://Assets/Walk/Walk1.png" id="2_solu2"]
+[ext_resource type="Texture2D" uid="uid://5csnglfwiag5" path="res://Assets/Rotate/Rotate0.png" id="3_8hnis"]
+[ext_resource type="Texture2D" uid="uid://c4jdtm7n8ow2j" path="res://Assets/Walk/Walk2.png" id="3_qibhx"]
+[ext_resource type="Texture2D" uid="uid://hk26n5n0fqo4" path="res://Assets/Walk/Walk3.png" id="4_emhft"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3ft1r"]
+radius = 14.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bvt22"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0sx41")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_8hnis")
+}],
+"loop": false,
+"name": &"rotation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0sx41")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_solu2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qibhx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_emhft")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_oopub")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3ft1r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bvt22")
+animation = &"rotation"
+autoplay = "default"
+
+[node name="CollisionTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+autostart = true
+
+[node name="GameStartTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="CollisionTimer" to="." method="_on_collision_timer_timeout"]
+[connection signal="timeout" from="GameStartTimer" to="." method="_on_game_start_timer_timeout"]
