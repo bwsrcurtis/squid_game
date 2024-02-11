@@ -3,6 +3,8 @@ extends CharacterBody2D
 signal player_died
 @onready var anim:AnimatedSprite2D = $Squid
 
+var initial_pos = position.x
+var current_pos: float
 var speed = Globals.player_speed
 var jump_velocity: float = -600.0
 var double_jumped: bool = true
@@ -16,6 +18,9 @@ var dead: bool = false
 
 func _process(delta):
 	if game_start == true:
+		current_pos = position.x
+		if (current_pos - initial_pos) >= 1000:
+			spawn()
 		#Turn if hit wall
 		if velocity.x == 0 and open_to_collision:
 			dead = true
@@ -117,3 +122,7 @@ func _on_squid_animation_finished():
 		player_died.emit()
 	elif not is_on_floor():
 		anim.play('default')
+
+func spawn():
+	initial_pos = position.x
+	print(initial_pos)
