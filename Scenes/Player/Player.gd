@@ -8,16 +8,18 @@ var jump_velocity: float = -600.0
 var double_jumped: bool = true
 var open_to_collision: bool = false
 var running: bool = false
-var game_start: bool = false
+var game_start = Globals.game_started
 var going_left: bool = false
 var gravity = ProjectSettings.get_setting('physics/2d/default_gravity')
 var direction: int = 1
+var dead: bool = false
 
 func _process(delta):
 	if game_start == true:
 		#Turn if hit wall
 		if velocity.x == 0 and open_to_collision:
-			turn()
+			dead = true
+			die("collision")
 		velocity.x = speed * direction
 		#Activate gravity while in air
 		if not is_on_floor():
@@ -30,7 +32,7 @@ func _process(delta):
 			double_jump()
 
 		#Reset Double Jump
-		if is_on_floor():
+		if is_on_floor() and not dead:
 			double_jumped = false
 			if running:
 				anim.play('run')
@@ -42,15 +44,24 @@ func _process(delta):
 			run()
 
 		move_and_slide()
+	else:
+		velocity.x = 1
+		game_start = Globals.game_started
 
 
 func jump():
 	velocity.y = jump_velocity
+	$JumpSound.play()
+	$JumpSound.pitch_scale = 1.0
 	anim.play('default')
+	
+	
 
 func double_jump():
 	double_jumped = true
 	anim.play('rotate')
+	$JumpSound.play()
+	$JumpSound.pitch_scale = 4.0
 	velocity.y = .75 * jump_velocity
 
 func turn():
@@ -77,15 +88,32 @@ func run():
 		$CPUParticles2D.emitting = false
 		speed = Globals.player_speed
 
-func _on_squid_animation_finished():
-	if not is_on_floor():
-		anim.play('default')
+
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
-	player_died.emit()
+	die("offscreen")
 
 
-func _on_wait_timer_timeout():
-	velocity.x = 1
-	game_start = true
+#func _on_wait_timer_timeout():
+	#velocity.x = 1
+	#game_start = true
 	
+func die(method):
+	if method == "collision":
+		speed = 0
+		$CPUParticles2D.emitting = false
+		Globals.game_started = false
+		anim.play('die')
+	elif method == "offscreen":
+		speed = 0
+		$CPUParticles2D.emitting = false
+		Globals.game_started = false
+		player_died.emit()
+
+
+
+func _on_squid_animation_finished():
+	if anim.animation == "die":
+		player_died.emit()
+	elif not is_on_floor():
+		anim.play('default')

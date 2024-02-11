@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://4wkj23cavyvp"]
+[gd_scene load_steps=13 format=3 uid="uid://4wkj23cavyvp"]
 
 [ext_resource type="Texture2D" uid="uid://bkgis52314jjg" path="res://Assets/Walk/Walk0.png" id="1_0sx41"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_oopub"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://sgtoaa8j4uv3" path="res://Assets/Rotate/Rotate1.png" id="4_scp8e"]
 [ext_resource type="Texture2D" uid="uid://xnjccry62x2w" path="res://Assets/Rotate/Rotate2.png" id="5_h0q6o"]
 [ext_resource type="Texture2D" uid="uid://we21rfyfdqwr" path="res://Assets/Rotate/Rotate3.png" id="6_n3xm6"]
+[ext_resource type="AudioStream" uid="uid://hirqvqprbha8" path="res://Assets/jump.ogg" id="10_6giry"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3ft1r"]
 radius = 14.0
@@ -22,6 +23,38 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_8hnis")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_scp8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_h0q6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_n3xm6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8hnis")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_scp8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_h0q6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_n3xm6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_8hnis")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -90,10 +123,6 @@ wait_time = 0.05
 one_shot = true
 autostart = true
 
-[node name="WaitTimer" type="Timer" parent="."]
-one_shot = true
-autostart = true
-
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
@@ -115,10 +144,15 @@ color = Color(0.956863, 0.87451, 0.745098, 1)
 
 [node name="Squid" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_bvt22")
-animation = &"run"
+animation = &"die"
 autoplay = "walk"
+frame = 8
+frame_progress = 1.0
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_6giry")
+volume_db = -15.928
 
 [connection signal="timeout" from="CollisionTimer" to="." method="_on_collision_timer_timeout"]
-[connection signal="timeout" from="WaitTimer" to="." method="_on_wait_timer_timeout"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="animation_finished" from="Squid" to="." method="_on_squid_animation_finished"]
