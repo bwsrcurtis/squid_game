@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal player_died
+signal spawn_obstacle(obstacle_pos_x)
 @onready var anim:AnimatedSprite2D = $Squid
 
 var initial_pos = position.x
@@ -19,7 +20,7 @@ var dead: bool = false
 func _process(delta):
 	if game_start == true:
 		current_pos = position.x
-		if (current_pos - initial_pos) >= 1000:
+		if (current_pos - initial_pos) >= 600:
 			spawn()
 		#Turn if hit wall
 		if velocity.x == 0 and open_to_collision:
@@ -104,6 +105,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	#game_start = true
 	
 func die(method):
+	if Globals.score >= Globals.high_score:
+		Globals.high_score = Globals.score
 	if method == "collision":
 		speed = 0
 		$CPUParticles2D.emitting = false
@@ -125,4 +128,6 @@ func _on_squid_animation_finished():
 
 func spawn():
 	initial_pos = position.x
-	print(initial_pos)
+	Globals.score += 1000
+	spawn_obstacle.emit($RayCast2D/Marker2D.global_position.x)
+	#print($RayCast2D/Marker2D.global_position.x)

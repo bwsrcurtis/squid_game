@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx1h4n4nvslao"]
+
+[ext_resource type="TileSet" uid="uid://cik6kljb8n8ou" path="res://Scenes/Templates/level.tres" id="1_edovi"]
+
+[node name="ObstacleTemplate" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(0, 600)
+scale = Vector2(2, 2)
+tile_set = ExtResource("1_edovi")
+format = 2
