@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 signal player_died
-signal spawn_obstacle(obstacle_pos_x)
+signal spawn_obstacle()
 @onready var anim:AnimatedSprite2D = $Squid
 
 var initial_pos = position.x
@@ -16,14 +16,23 @@ var going_left: bool = false
 var gravity = ProjectSettings.get_setting('physics/2d/default_gravity')
 var direction: int = 1
 var dead: bool = false
+var speed_rate_increase: float = .025
+var max_speed: float = 900
 
 func _process(delta):
 	if game_start == true:
+		if speed == max_speed:
+			$CPUParticles2D.emitting = true
 		current_pos = position.x
 		if (current_pos - initial_pos) >= 600:
+			if speed <= max_speed:
+				if (speed + speed * speed_rate_increase) > max_speed:
+					speed = max_speed
+				else:
+					speed += speed * speed_rate_increase
 			spawn()
 		#Turn if hit wall
-		if velocity.x == 0 and open_to_collision:
+		if velocity.x == 0 and open_to_collision and !dead:
 			dead = true
 			die("collision")
 		velocity.x = speed * direction
@@ -31,10 +40,10 @@ func _process(delta):
 		if not is_on_floor():
 			velocity.y += gravity * delta
 		#Jumping Logic
-		if (Input.is_action_just_pressed("Jump")) and is_on_floor():
+		if (Input.is_action_just_pressed("Jump")) and is_on_floor() and !dead:
 			jump()
 
-		if (Input.is_action_just_pressed("Jump")) and not is_on_floor() and not double_jumped:
+		if (Input.is_action_just_pressed("Jump")) and not is_on_floor() and not double_jumped and !dead:
 			double_jump()
 
 		#Reset Double Jump
@@ -45,9 +54,9 @@ func _process(delta):
 			else:
 				anim.play('walk')
 
-		#Activate Run
-		if (Input.is_action_just_pressed("Run")):
-			run()
+		##Activate Run
+		#if (Input.is_action_just_pressed("Run")):
+			#run()
 
 		move_and_slide()
 	else:
@@ -70,29 +79,29 @@ func double_jump():
 	$JumpSound.pitch_scale = 4.0
 	velocity.y = .75 * jump_velocity
 
-func turn():
-	$CPUParticles2D.direction = $CPUParticles2D.direction * -1
-	going_left = !going_left
-	if going_left:
-		anim.flip_h = 1
-		direction = -1
-	else:
-		anim.flip_h = 0
-		direction = 1
-	open_to_collision = false
-	$CollisionTimer.start()
+#func turn():
+	#$CPUParticles2D.direction = $CPUParticles2D.direction * -1
+	#going_left = !going_left
+	#if going_left:
+		#anim.flip_h = 1
+		#direction = -1
+	#else:
+		#anim.flip_h = 0
+		#direction = 1
+	#open_to_collision = false
+	#$CollisionTimer.start()
 
 func _on_collision_timer_timeout():
 	open_to_collision = true
 
-func run():
-	running = !running
-	if running:
-		$CPUParticles2D.emitting = true
-		speed = 2 * speed
-	else:
-		$CPUParticles2D.emitting = false
-		speed = Globals.player_speed
+#func run():
+	#running = !running
+	#if running:
+		#$CPUParticles2D.emitting = true
+		#speed = 2 * speed
+	#else:
+		#$CPUParticles2D.emitting = false
+		#speed = speed / 2
 
 
 
@@ -105,17 +114,18 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	#game_start = true
 	
 func die(method):
+	$DeathSound.play()
 	if Globals.score >= Globals.high_score:
 		Globals.high_score = Globals.score
 	if method == "collision":
 		speed = 0
+		gravity = 0
+		velocity = Vector2(0,0)
 		$CPUParticles2D.emitting = false
-		Globals.game_started = false
 		anim.play('die')
 	elif method == "offscreen":
 		speed = 0
 		$CPUParticles2D.emitting = false
-		Globals.game_started = false
 		player_died.emit()
 
 
@@ -128,6 +138,6 @@ func _on_squid_animation_finished():
 
 func spawn():
 	initial_pos = position.x
-	Globals.score += 1000
-	spawn_obstacle.emit($RayCast2D/Marker2D.global_position.x)
+	Globals.score += 500
+	spawn_obstacle.emit()
 	#print($RayCast2D/Marker2D.global_position.x)
