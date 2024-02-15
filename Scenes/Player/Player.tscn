@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://4wkj23cavyvp"]
+[gd_scene load_steps=16 format=3 uid="uid://4wkj23cavyvp"]
 
 [ext_resource type="Texture2D" uid="uid://bkgis52314jjg" path="res://Assets/Walk/Walk0.png" id="1_0sx41"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_oopub"]
@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://hk26n5n0fqo4" path="res://Assets/Walk/Walk3.png" id="4_emhft"]
 [ext_resource type="Texture2D" uid="uid://sgtoaa8j4uv3" path="res://Assets/Rotate/Rotate1.png" id="4_scp8e"]
 [ext_resource type="Texture2D" uid="uid://xnjccry62x2w" path="res://Assets/Rotate/Rotate2.png" id="5_h0q6o"]
+[ext_resource type="Texture2D" uid="uid://oou0bcdhtkpx" path="res://Assets/Jump/Jump0.png" id="6_42ht5"]
 [ext_resource type="Texture2D" uid="uid://we21rfyfdqwr" path="res://Assets/Rotate/Rotate3.png" id="6_n3xm6"]
+[ext_resource type="Texture2D" uid="uid://1q2fqer6f04x" path="res://Assets/Jump/Jump1.png" id="7_vlbij"]
 [ext_resource type="AudioStream" uid="uid://hirqvqprbha8" path="res://Assets/jump.ogg" id="10_6giry"]
 [ext_resource type="AudioStream" uid="uid://1d0lfaug12h4" path="res://Assets/videogame-death-sound-43894.ogg" id="11_g7ndc"]
 
@@ -17,14 +19,6 @@ radius = 14.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bvt22"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_0sx41")
-}],
-"loop": true,
-"name": &"default",
-"speed": 2.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_8hnis")
@@ -56,6 +50,17 @@ animations = [{
 "loop": false,
 "name": &"die",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_42ht5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vlbij")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -146,10 +151,9 @@ color = Color(0.956863, 0.87451, 0.745098, 1)
 
 [node name="Squid" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_bvt22")
-animation = &"die"
+animation = &"jump"
 autoplay = "walk"
-frame = 8
-frame_progress = 1.0
+frame_progress = 0.775828
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_6giry")

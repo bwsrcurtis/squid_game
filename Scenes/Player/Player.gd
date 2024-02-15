@@ -25,6 +25,8 @@ func _process(delta):
 			$CPUParticles2D.emitting = true
 		current_pos = position.x
 		if (current_pos - initial_pos) >= 600:
+			if speed > 750:
+				anim.play('run')
 			if speed <= max_speed:
 				if (speed + speed * speed_rate_increase) > max_speed:
 					speed = max_speed
@@ -39,6 +41,8 @@ func _process(delta):
 		#Activate gravity while in air
 		if not is_on_floor():
 			velocity.y += gravity * delta
+			if not double_jumped and !dead:
+				anim.play('jump')
 		#Jumping Logic
 		if (Input.is_action_just_pressed("Jump")) and is_on_floor() and !dead:
 			jump()
@@ -49,7 +53,10 @@ func _process(delta):
 		#Reset Double Jump
 		if is_on_floor() and not dead:
 			double_jumped = false
-			if running:
+			#if running:
+				#anim.play('run')
+			
+			if speed > 750:
 				anim.play('run')
 			else:
 				anim.play('walk')
@@ -68,7 +75,8 @@ func jump():
 	velocity.y = jump_velocity
 	$JumpSound.play()
 	$JumpSound.pitch_scale = 1.0
-	anim.play('default')
+	anim.play('jump')
+	print(anim.animation)
 	
 	
 
@@ -134,7 +142,7 @@ func _on_squid_animation_finished():
 	if anim.animation == "die":
 		player_died.emit()
 	elif not is_on_floor():
-		anim.play('default')
+		anim.play('jump')
 
 func spawn():
 	initial_pos = position.x
