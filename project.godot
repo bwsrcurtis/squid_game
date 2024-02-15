@@ -13,7 +13,6 @@ config_version=5
 config/name="Squid Runner"
 run/main_scene="res://Scenes/Templates/level.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-run/max_fps=30
 config/icon="res://icon.svg"
 config/windows_native_icon="res://Assets/Squid.ico"
 

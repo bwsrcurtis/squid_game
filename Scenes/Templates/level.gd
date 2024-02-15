@@ -1,6 +1,6 @@
 extends Node2D
 
-var obstacles_array:Array = ["res://Scenes/Obstacles/obstacle_one.tscn","res://Scenes/Obstacles/obstacle_two.tscn","res://Scenes/Obstacles/obstacle_three.tscn","res://Scenes/Obstacles/obstacle_four.tscn"]
+var obstacles_array:Array = ["res://Scenes/Obstacles/obstacle_one.tscn","res://Scenes/Obstacles/obstacle_two.tscn","res://Scenes/Obstacles/obstacle_three.tscn","res://Scenes/Obstacles/obstacle_four.tscn","res://Scenes/Obstacles/obstacle_five.tscn", "res://Scenes/Obstacles/obstacle_six.tscn", "res://Scenes/Obstacles/obstacle_seven.tscn","res://Scenes/Obstacles/obstacle_eight.tscn","res://Scenes/Obstacles/obstacle_nine.tscn","res://Scenes/Obstacles/obstacle_ten.tscn"]
 
 func _ready():
 	$AudioStreamPlayer.play()
