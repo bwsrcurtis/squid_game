@@ -76,7 +76,6 @@ func jump():
 	$JumpSound.play()
 	$JumpSound.pitch_scale = 1.0
 	anim.play('jump')
-	print(anim.animation)
 	
 	
 
@@ -148,4 +147,3 @@ func spawn():
 	initial_pos = position.x
 	Globals.score += 500
 	spawn_obstacle.emit()
-	#print($RayCast2D/Marker2D.global_position.x)
