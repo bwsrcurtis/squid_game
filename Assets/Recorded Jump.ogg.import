@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cla7louajahc7"
+path="res://.godot/imported/Recorded Jump.ogg-95c76ced6120276fe9b1776b3f092d12.oggvorbisstr"
+
+[deps]
+
+source_file="res://Assets/Recorded Jump.ogg"
+dest_files=["res://.godot/imported/Recorded Jump.ogg-95c76ced6120276fe9b1776b3f092d12.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

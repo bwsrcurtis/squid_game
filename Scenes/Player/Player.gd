@@ -83,7 +83,7 @@ func double_jump():
 	double_jumped = true
 	anim.play('rotate')
 	$JumpSound.play()
-	$JumpSound.pitch_scale = 4.0
+	$JumpSound.pitch_scale = 1.2
 	velocity.y = .75 * jump_velocity
 
 #func turn():

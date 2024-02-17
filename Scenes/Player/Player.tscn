@@ -11,8 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://oou0bcdhtkpx" path="res://Assets/Jump/Jump0.png" id="6_42ht5"]
 [ext_resource type="Texture2D" uid="uid://we21rfyfdqwr" path="res://Assets/Rotate/Rotate3.png" id="6_n3xm6"]
 [ext_resource type="Texture2D" uid="uid://1q2fqer6f04x" path="res://Assets/Jump/Jump1.png" id="7_vlbij"]
-[ext_resource type="AudioStream" uid="uid://hirqvqprbha8" path="res://Assets/jump.ogg" id="10_6giry"]
 [ext_resource type="AudioStream" uid="uid://1d0lfaug12h4" path="res://Assets/videogame-death-sound-43894.ogg" id="11_g7ndc"]
+[ext_resource type="AudioStream" uid="uid://cla7louajahc7" path="res://Assets/Recorded Jump.ogg" id="12_3vg7d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3ft1r"]
 radius = 14.0
@@ -156,8 +156,8 @@ autoplay = "walk"
 frame_progress = 0.775828
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_6giry")
-volume_db = -15.928
+stream = ExtResource("12_3vg7d")
+volume_db = 5.0
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_g7ndc")
