@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cfxghwimsl45n"]
+[gd_scene load_steps=11 format=3 uid="uid://cfxghwimsl45n"]
 
 [ext_resource type="Script" path="res://Scenes/Templates/level.gd" id="1_lvad4"]
 [ext_resource type="Texture2D" uid="uid://dp31gcxumkauh" path="res://Assets/background_32_updated_flipped.png" id="2_m2wjp"]
@@ -7,6 +7,9 @@
 [ext_resource type="FontFile" uid="uid://cgk4xsq04o842" path="res://Assets/rainyhearts.ttf" id="5_b74jw"]
 [ext_resource type="StyleBox" uid="uid://dk680ex5rj4p0" path="res://Scenes/Templates/stylebox.tres" id="6_i6lq6"]
 [ext_resource type="AudioStream" uid="uid://dcns4kra2gvd6" path="res://Assets/DST-RailJet-LongSeamlessLoop.ogg" id="7_uld1f"]
+
+[sub_resource type="Gradient" id="Gradient_ddi68"]
+colors = PackedColorArray(0.917647, 0.768627, 0.682353, 1, 0.890196, 0.698039, 0.701961, 0)
 
 [sub_resource type="Animation" id="Animation_iv5el"]
 resource_name = "fade_in"
@@ -71,6 +74,7 @@ region_rect = Rect2(-3, 0, 1156, 128)
 metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="."]
+z_index = 1
 y_sort_enabled = true
 position = Vector2(0, 600)
 scale = Vector2(2, 2)
@@ -85,6 +89,7 @@ layer_1/tile_data = PackedInt32Array(1245183, 131073, 0, 1310719, 131073, 1, 137
 layer_2/name = "Items"
 layer_2/y_sort_enabled = true
 layer_2/tile_data = PackedInt32Array()
+metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("2_xj1xt")]
 position = Vector2(48, 576)
@@ -94,6 +99,22 @@ position = Vector2(100, 0)
 limit_left = 0
 limit_top = 0
 limit_bottom = 648
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Player/Camera2D"]
+position = Vector2(468, -116)
+amount = 20
+lifetime = 10.0
+preprocess = 10.0
+emission_shape = 3
+emission_rect_extents = Vector2(1, 175)
+direction = Vector2(-1, 0)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 50.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+color_ramp = SubResource("Gradient_ddi68")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1
@@ -105,6 +126,7 @@ texture = ExtResource("2_m2wjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(-3, -1, 50000, 128)
+metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -122,6 +144,7 @@ offset_left = -57.0
 offset_right = 57.0
 offset_bottom = 55.0
 grow_horizontal = 2
+metadata/_edit_lock_ = true
 
 [node name="HighScore" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
@@ -153,6 +176,7 @@ offset_right = 260.5
 offset_bottom = 62.5
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="Title" type="Label" parent="CanvasLayer/VBoxContainer2"]
 layout_mode = 2
