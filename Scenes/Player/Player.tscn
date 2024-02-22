@@ -15,7 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://cla7louajahc7" path="res://Assets/Recorded Jump.ogg" id="12_3vg7d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3ft1r"]
-radius = 14.0
+radius = 13.0096
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bvt22"]
 animations = [{
